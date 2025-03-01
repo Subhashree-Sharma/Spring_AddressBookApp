@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
+import com.addressBook.dto.AddressBookDTO;
 
 @RestController
 @RequestMapping("/api/addressbook")
@@ -22,7 +23,7 @@ public class AddressBookController {
     @Autowired
     private AddressBookService service;
 
-    @GetMapping
+    @GetMapping("/getContact")
     public ResponseEntity<List<AddressBookEntry>> getAllContacts() {
         return ResponseEntity.ok(service.getAllContacts());
     }
@@ -32,7 +33,7 @@ public class AddressBookController {
         return contact.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-    @PostMapping
+    @PostMapping("/addContact")
     public ResponseEntity<AddressBookEntry> addContact(@RequestBody AddressBookEntry entry) {
         return ResponseEntity.ok(service.saveContact(entry));
     }
@@ -45,5 +46,16 @@ public class AddressBookController {
     public ResponseEntity<Void> deleteContact(@PathVariable Long id) {
         service.deleteContact(id);
         return ResponseEntity.noContent().build();
+    }
+
+    //Uc_01 (Section -2)
+    @GetMapping("/getEntry")
+    public ResponseEntity<List<AddressBookEntry>> getAllEntries() {
+        return ResponseEntity.ok(service.getAllEntries());
+    }
+
+    @PostMapping("/addEntry")
+    public ResponseEntity<AddressBookEntry> addEntry(@RequestBody AddressBookDTO dto) {
+        return ResponseEntity.ok(service.addEntry(dto));
     }
 }
