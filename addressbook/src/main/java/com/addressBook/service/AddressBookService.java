@@ -1,5 +1,5 @@
 package com.addressBook.service;
-
+import com.addressBook.dto.AddressBookDTO;
 import com.addressBook.model.AddressBookEntry;
 import com.addressBook.repository.AddressBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,4 +38,19 @@ public class AddressBookService {
     public void deleteContact(Long id) {
         repository.deleteById(id);
     }
+
+
+    //UC_ 01 (Section)
+    public List<AddressBookEntry> getAllEntries() {
+        return repository.findAll();
+    }
+
+    public AddressBookEntry addEntry(AddressBookDTO dto) {
+        AddressBookEntry address = new AddressBookEntry();
+        address.setName(dto.getName());
+        address.setPhone(dto.getPhone());
+        address.setEmail(dto.getEmail());
+        return repository.save(address);
+    }
+
 }
