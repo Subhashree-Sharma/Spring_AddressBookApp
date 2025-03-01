@@ -58,4 +58,17 @@ public class AddressBookController {
     public ResponseEntity<AddressBookEntry> addEntry(@RequestBody AddressBookDTO dto) {
         return ResponseEntity.ok(service.addEntry(dto));
     }
+
+    //UC_02 (Section -2)
+    @PutMapping("/Entry/{id}")
+    public ResponseEntity<AddressBookEntry> updateEntry(@PathVariable Long id, @RequestBody AddressBookDTO dto) {
+        AddressBookEntry updatedEntry = service.updateEntry(id, dto);
+        return (updatedEntry != null) ? ResponseEntity.ok(updatedEntry) : ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteEntry(@PathVariable Long id) {
+        service.deleteEntry(id);
+        return ResponseEntity.noContent().build();
+    }
 }

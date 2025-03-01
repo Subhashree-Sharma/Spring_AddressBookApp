@@ -40,7 +40,7 @@ public class AddressBookService {
     }
 
 
-    //UC_ 01 (Section)
+    //UC_ 01 & Uc_02 (Section)
     public List<AddressBookEntry> getAllEntries() {
         return repository.findAll();
     }
@@ -53,4 +53,20 @@ public class AddressBookService {
         return repository.save(address);
     }
 
+    //Uc_02 (Section -2)
+    public AddressBookEntry updateEntry(Long id, AddressBookDTO dto) {
+        Optional<AddressBookEntry> existing = repository.findById(id);
+        if (existing.isPresent()) {
+            AddressBookEntry address = existing.get();
+            address.setName(dto.getName());
+            address.setPhone(dto.getPhone());
+            address.setEmail(dto.getEmail());
+            return repository.save(address);
+        }
+        return null;
+    }
+
+    public void deleteEntry(Long id) {
+        repository.deleteById(id);
+    }
 }
